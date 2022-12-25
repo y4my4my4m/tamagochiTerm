@@ -1,5 +1,4 @@
 # Tamagotchi Terminal Game
-
 class Tamagotchi:
     def __init__(self, name, hunger=0, tiredness=0, boredom=0, dirtiness=0):
         self.name = name
@@ -7,6 +6,7 @@ class Tamagotchi:
         self.tiredness = tiredness
         self.boredom = boredom
         self.dirtiness = dirtiness
+        self.display = self.display_sleep()
     
     def _pass_time(self):
         self.hunger += 1
@@ -35,19 +35,23 @@ class Tamagotchi:
     def play(self):
         self.boredom -= 2
         self.tiredness += 1
+        self.display = self.display_play()
         self._pass_time()
     
     def eat(self):
         self.hunger -= 2
         self.dirtiness += 1
+        self.display = self.display_food()
         self._pass_time()
     
     def sleep(self):
         self.tiredness -= 2
+        self.display = self.display_sleep()
         self._pass_time()
     
     def clean(self):
         self.dirtiness -= 2
+        self.display = self.display_clean()
         self._pass_time()
     
     def report(self):
@@ -62,12 +66,30 @@ class Tamagotchi:
             print(f"{self.name} is dead!")
             restart()
 
-    def display_cute_character(self):
-        print('''
+    def display_play(self):
+        return('''
             /\_/\\
             >^.^<
             (   )
             """""
+        ''')
+    def display_food(self):
+        return('''
+            /\_/\\
+            ( o.o )
+            >^<
+        ''')
+    def display_clean(self):
+        return('''
+            /\_/\\
+            ( o.o )
+            (")_(")
+        ''')
+    def display_sleep(self):
+        return ('''
+            /\_/\\
+            ( ^.^ )
+            C(")(")
         ''')
 
 def restart():
@@ -81,17 +103,11 @@ def restart():
         print(f"Goodbye!")
 
 def play_game():
-    print('''
-        /\_/\\
-        >^.^<
-        (   )
-        """""
-    ''')
-    name = input("What do you want to name your Tamagotchi? ")
+    name = input("What do you want to name your Tamagotchi?\n")
     pet = Tamagotchi(name)
     
     while not pet._is_dead():
-        pet.display_cute_character()
+        print(pet.display)
         print("What do you want to do with your Tamagotchi?\n")
         print("1. Play")
         print("2. Eat")
