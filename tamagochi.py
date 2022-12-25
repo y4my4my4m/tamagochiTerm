@@ -35,13 +35,13 @@ class Tamagotchi:
     def play(self):
         self.boredom -= 2
         self.tiredness += 1
-        self.display = self.display_play()
+        self.display = self.display_happy()
         self._pass_time()
     
     def eat(self):
         self.hunger -= 2
         self.dirtiness += 1
-        self.display = self.display_food()
+        self.display = self.display_eating()
         self._pass_time()
     
     def sleep(self):
@@ -51,7 +51,7 @@ class Tamagotchi:
     
     def clean(self):
         self.dirtiness -= 2
-        self.display = self.display_clean()
+        self.display = self.display_happy()
         self._pass_time()
     
     def report(self):
@@ -61,34 +61,47 @@ class Tamagotchi:
         print(f"Boredom: {self.boredom}")
         print(f"Dirtiness: {self.dirtiness}")
         if self._is_sick():
+            self.display = self.display_sick()
             print(f"{self.name} is sick!")
         if self._is_dead():
+            self.display = self.display_dead()
             print(f"{self.name} is dead!")
             restart()
 
-    def display_play(self):
-        return('''
-            /\_/\\
-            >^.^<
-            (   )
-            """""
-        ''')
-    def display_food(self):
+    def display_eating(self):
         return('''
             /\_/\\
             ( o.o )
-            >^<
+              >^<
         ''')
-    def display_clean(self):
+    def display_shocked(self):
         return('''
             /\_/\\
             ( o.o )
             (")_(")
         ''')
-    def display_sleep(self):
+    def display_happy(self):
         return ('''
             /\_/\\
             ( ^.^ )
+            C(")(")
+        ''')
+    def display_sick(self):
+        return ('''
+            /\_/\\
+            ( @.@ )
+            C(")(")
+        ''')
+    def display_sleep(self):
+        return ('''
+            /\_/\\
+            ( -.- )
+            C(")(")
+        ''')
+    def display_dead(self):
+        return ('''
+            /\_/\\
+            ( X.X )
             C(")(")
         ''')
 
